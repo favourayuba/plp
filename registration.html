@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Form</title>
+  <style>
+    .error {
+      color: red;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Registration Form</h2>
+<form id="registrationForm" onsubmit="return validateRegistrationForm()">
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name"><br>
+  <span id="nameError" class="error"></span><br>
+
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email"><br>
+  <span id="emailError" class="error"></span><br>
+
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password"><br>
+  <span id="passwordError" class="error"></span><br>
+
+  <label for="confirmPassword">Confirm Password:</label>
+  <input type="password" id="confirmPassword" name="confirmPassword"><br>
+  <span id="confirmPasswordError" class="error"></span><br>
+
+  <label for="age">Age:</label>
+  <input type="number" id="age" name="age"><br>
+  <span id="ageError" class="error"></span><br>
+
+  <label>Gender:</label>
+  <input type="radio" id="male" name="gender" value="Male"> Male
+  <input type="radio" id="female" name="gender" value="Female"> Female<br>
+  <span id="genderError" class="error"></span><br>
+
+  <label for="country">Country:</label>
+  <select id="country" name="country">
+    <option value="">Select your country</option>
+    <option value="USA">USA</option>
+    <option value="Spain">Spain</option>
+    <option value="India">India</option>
+  </select><br>
+  <span id="countryError" class="error"></span><br>
+
+  <label for="terms">I agree to the terms and conditions:</label>
+  <input type="checkbox" id="terms" name="terms"><br>
+  <span id="termsError" class="error"></span><br>
+
+  <button type="submit">Register</button>
+</form>
+
+<script>
+  function validateRegistrationForm() {
+    let isValid = true;
+
+    // Name validation
+    const name = document.getElementById("name").value;
+    const nameError = document.getElementById("nameError");
+    if (name === "") {
+      nameError.textContent = "Name is required";
+      isValid = false;
+    } else {
+      nameError.textContent = "";
+    }
+
+    // Email validation
+    const email = document.getElementById("email").value;
+    const emailError = document.getElementById("emailError");
+    const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    if (email === "") {
+      emailError.textContent = "Email is required";
+      isValid = false;
+    } else if (!email.match(emailPattern)) {
+      emailError.textContent = "Enter a valid email (e.g., user@example.com)";
+      isValid = false;
+    } else {
+      emailError.textContent = "";
+    }
+
+    // Password validation
+    const password = document.getElementById("password").value;
+    const passwordError = document.getElementById("passwordError");
+    if (password.length < 8) {
+      passwordError.textContent = "Password must be at least 8 characters";
+      isValid = false;
+    } else {
+      passwordError.textContent = "";
+    }
+
+    // Confirm Password validation
+    const confirmPassword = document.getElementById("confirmPassword").value;
+    const confirmPasswordError = document.getElementById("confirmPasswordError");
+    if (confirmPassword !== password) {
+      confirmPasswordError.textContent = "Passwords do not match";
+      isValid = false;
+    } else {
+      confirmPasswordError.textContent = "";
+    }
+
+    // Age validation
+    const age = parseInt(document.getElementById("age").value);
+    const ageError = document.getElementById("ageError");
+    if (isNaN(age) || age < 18 || age > 100) {
+      ageError.textContent = "Enter a valid age between 18 and 100";
+      isValid = false;
+    } else {
+      ageError.textContent = "";
+    }
+
+    // Gender validation
+    const gender = document.querySelector('input[name="gender"]:checked');
+    const genderError = document.getElementById("genderError");
+    if (!gender) {
+      genderError.textContent = "Gender is required";
+      isValid = false;
+    } else {
+      genderError.textContent = "";
+    }
+
+    // Country validation
+    const country = document.getElementById("country").value;
+    const countryError = document.getElementById("countryError");
+    if (country === "") {
+      countryError.textContent = "Please select your country";
+      isValid = false;
+    } else {
+      countryError.textContent = "";
+    }
+
+    // Terms and Conditions validation
+    const terms = document.getElementById("terms").checked;
+    const termsError = document.getElementById("termsError");
+    if (!terms) {
+      termsError.textContent = "You must agree to the terms and conditions";
+      isValid = false;
+    } else {
+      termsError.textContent = "";
+    }
+
+    return isValid;
+  }
+</script>
+
+</body>
+</html>
